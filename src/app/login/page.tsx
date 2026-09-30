@@ -23,11 +23,11 @@ export default async function LoginPage({
 
     return (
     <main className="mx-auto max-w-sm px-8 py-20">
-      <h1 className="text-2xl font-bold text-navy">Admin login</h1>
+      <h1 className="text-2xl font-bold text-ink">Admin login</h1>
       <p className="mt-1 text-sm text-muted">Sign in to manage products and orders.</p>
       {/* Error messages use red so they stand out from the brand colors */}
       {error && (
-        <p className="mt-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
+        <p className="mt-4 rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-600">
           Wrong email or password.
         </p>
       )}
@@ -37,16 +37,16 @@ export default async function LoginPage({
           type="email"
           placeholder="Email"
           required
-          className="rounded-lg border border-navy/20 px-4 py-2 focus:border-electric focus:outline-none"
+          className="rounded-lg border border-ink/20 px-4 py-2 focus:border-electric focus:outline-none"
         />
         <input
           name="password"
           type="password"
           placeholder="Password"
           required
-          className="rounded-lg border border-navy/20 px-4 py-2 focus:border-electric focus:outline-none"
+          className="rounded-lg border border-ink/20 px-4 py-2 focus:border-electric focus:outline-none"
         />
-        <button className="rounded-lg bg-electric px-4 py-2 font-semibold text-white transition hover:bg-navy">
+        <button className="rounded-lg bg-electric px-4 py-2 font-semibold text-white transition hover:bg-accent-hover">
           Log in
         </button>
       </form>

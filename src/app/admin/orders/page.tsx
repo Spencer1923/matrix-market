@@ -34,22 +34,22 @@ export default async function OrdersPage() {
 
     return (
     <main className="mx-auto max-w-3xl px-8 py-10">
-      <Link href="/admin" className="text-sm text-electric hover:underline">
+      <Link href="/admin" className="text-sm text-link hover:underline">
         ← Back to admin
       </Link>
-      <h1 className="mt-4 text-3xl font-bold text-navy">Orders</h1>
+      <h1 className="mt-4 text-3xl font-bold text-ink">Orders</h1>
 
       {orders.length === 0 && <p className="mt-6 text-muted">No orders yet.</p>}
 
       <ul className="mt-6 space-y-4">
         {orders.map((o) => (
-          <li key={o.id} className="rounded-xl border border-navy/10 p-5">
+          <li key={o.id} className="rounded-xl border border-ink/10 p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <p className="font-bold text-navy">Order #{o.id}</p>
+              <p className="font-bold text-ink">Order #{o.id}</p>
               {/* Status pill: cyan when shipped, blue when new */}
               <span
                 className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                  o.status === "shipped" ? "bg-aqua/20 text-electric" : "bg-skyblue/20 text-navy"
+                  o.status === "shipped" ? "bg-aqua/20 text-link" : "bg-skyblue/20 text-ink"
                 }`}
               >
                 {o.status === "shipped" ? "Shipped" : "New"}
@@ -69,7 +69,7 @@ export default async function OrdersPage() {
               </p>
             )}
 
-            <ul className="mt-4 divide-y divide-navy/10 text-sm">
+            <ul className="mt-4 divide-y divide-ink/10 text-sm">
               {o.order_items.map((i) => (
                 <li key={i.id} className="flex justify-between py-2">
                   <span>
@@ -85,12 +85,12 @@ export default async function OrdersPage() {
               <form action={setOrderStatus}>
                 <input type="hidden" name="id" value={o.id} />
                 <input type="hidden" name="status" value={o.status === "shipped" ? "new" : "shipped"} />
-                <button className="rounded-lg border border-electric px-3 py-1 text-sm font-medium text-electric transition hover:bg-electric hover:text-white">
+                <button className="rounded-lg border border-electric px-3 py-1 text-sm font-medium text-link transition hover:bg-electric hover:text-white">
                   {o.status === "shipped" ? "Mark as new" : "Mark as shipped"}
                 </button>
               </form>
               {/* total_cents is what Stripe actually charged */}
-              <p className="font-bold text-navy">
+              <p className="font-bold text-ink">
                 Total: ${(o.total_cents / 100).toFixed(2)} {o.currency.toUpperCase()}
               </p>
             </div>

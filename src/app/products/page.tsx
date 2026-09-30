@@ -27,7 +27,7 @@ export default async function ProductsPage({
 
     return (
     <main className="mx-auto max-w-6xl px-8 py-10">
-      <h1 className="text-3xl font-bold text-navy">All Products</h1>
+      <h1 className="text-3xl font-bold text-ink">All Products</h1>
 
       {/* Search: a plain form that reloads the page with ?q=... */}
       <form className="mt-6 flex gap-2">
@@ -37,9 +37,9 @@ export default async function ProductsPage({
           name="q"
           defaultValue={q}
           placeholder="Search products"
-          className="w-full max-w-sm rounded-lg border border-navy/20 px-4 py-2 focus:border-electric focus:outline-none"
+          className="w-full max-w-sm rounded-lg border border-ink/20 px-4 py-2 focus:border-electric focus:outline-none"
         />
-        <button className="rounded-lg bg-electric px-5 py-2 font-semibold text-white transition hover:bg-navy">
+        <button className="rounded-lg bg-electric px-5 py-2 font-semibold text-white transition hover:bg-accent-hover">
           Search
         </button>
       </form>
@@ -49,7 +49,7 @@ export default async function ProductsPage({
         <Link
           href="/products"
           className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
-            !category ? "bg-navy text-white" : "bg-cool text-navy hover:bg-skyblue/30"
+            !category ? "bg-electric text-white" : "bg-panel text-ink hover:bg-skyblue/30"
           }`}
         >
           All
@@ -59,7 +59,7 @@ export default async function ProductsPage({
             key={c}
             href={`/products?category=${encodeURIComponent(c)}`}
             className={`rounded-full px-4 py-1.5 text-sm font-medium capitalize transition ${
-              category === c ? "bg-navy text-white" : "bg-cool text-navy hover:bg-skyblue/30"
+              category === c ? "bg-electric text-white" : "bg-panel text-ink hover:bg-skyblue/30"
             }`}
           >
             {c}

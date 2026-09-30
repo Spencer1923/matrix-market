@@ -22,7 +22,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
         setAdded(true);
         setTimeout(() => setAdded(false), 1500); // back to normal after 1.5 seconds
       }}
-      className="mt-6 w-full rounded-lg bg-electric px-6 py-3 font-semibold text-white transition hover:bg-navy disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60"
+      className="mt-6 w-full rounded-lg bg-electric px-6 py-3 font-semibold text-white transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60"
     >
       {product.stock === 0 ? "Out of stock" : added ? "Added ✓" : "Add to cart"}
     </button>

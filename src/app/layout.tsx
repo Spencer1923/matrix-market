@@ -22,14 +22,22 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
-  return (
+    return (
+    // suppressHydrationWarning: the script below changes the class before React loads
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      {/* Wrap children here so every page can use the cart */}
+      <head>
+        {/* Uses the saved choice, or the computer's setting if they haven't picked yet */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark")}catch(e){}`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">
-        {/* Navbar must be inside CartProvider so it can read the cart */}
         <CartProvider>
           <DemoBanner />
           <Navbar />

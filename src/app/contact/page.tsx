@@ -7,7 +7,7 @@ export default function ContactPage() {
     <PolicyPage
       title="Contact us"
       sections={[
-        { heading: "Email", text: "spencer24ss9@gmail.com. We reply within 1-2 business days." },
+        { heading: "Email", text: "########@gmail.com. We reply within 1-2 business days." },
         { heading: "Business details", text: "Alejandro Sosa." },
       ]}
     />

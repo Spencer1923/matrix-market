@@ -11,7 +11,7 @@ export default function PrivacyPage() {
         { heading: "Payments", text: "Payments are processed by Stripe. We never see or store your card number." },
         { heading: "How we use it", text: "We use your information to fulfil and ship your order and to contact you about it. We do not sell your personal information." },
         { heading: "Where it is stored", text: "Order data is stored with our database provider, Supabase. Your shopping cart is kept only in your own browser." },
-        { heading: "Your choices", text: "To ask what we hold about you, or to have it corrected or deleted where the law allows, email spencer24ss9@gmail.com.." },
+        { heading: "Your choices", text: "To ask what we hold about you, or to have it corrected or deleted where the law allows, email #########@gmail.com.." },
       ]}
     />
   );

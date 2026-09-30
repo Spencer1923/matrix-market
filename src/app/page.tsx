@@ -1,20 +1,71 @@
-import { supabase } from "@/lib/supabase";
-import type { Product } from "@/types/product";
 import Link from "next/link";
+import { supabase } from "@/lib/supabase";
+import ProductCard from "@/components/ProductCard";
+import type { Product } from "@/types/product";
 
-// "async" works here because this page runs on the server
 export default async function Home() {
-  // Ask Supabase for every row in the products table)
-  const { data } = await supabase.from("products").select("*");
-  const products = (data ?? []) as Product[]; // "?? []" = empty list if nothing came back
+  // The 4 newest products for the featured row
+  const { data } = await supabase
+    .from("products")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(4);
+  const featured = (data ?? []) as Product[];
+
+  // Category tiles, built from whatever categories exist in the database
+  const { data: cats } = await supabase.from("products").select("category");
+  const categories = [...new Set((cats ?? []).map((c) => c.category as string))].sort();
 
   return (
-    <main className="p-8">
-      <h1 className="text-3xl font-bold">Matrix Market</h1>
-      {/* Simple link for now; we'll design a real homepage later */}
-      <Link href="/products" className="mt-4 inline-block underline">
-        Shop all products
-      </Link>
+    <main>
+      {/* Hero: big headline and a call-to-action button */}
+      <section className="bg-cool">
+        <div className="mx-auto max-w-6xl px-8 py-20 text-center sm:py-28">
+          <h1 className="text-4xl font-bold text-navy sm:text-6xl">
+            Tech that <span className="text-electric">powers</span> your setup
+          </h1>
+          <p className="mx-auto mt-5 max-w-xl text-lg text-muted">
+            TVs, speakers, and games, all in one place.
+          </p>
+          <Link
+            href="/products"
+            className="mt-8 inline-block rounded-lg bg-electric px-8 py-3 font-semibold text-white transition hover:bg-navy"
+          >
+            Shop all products
+          </Link>
+        </div>
+      </section>
+
+      {/* Category tiles: each links to the filtered products page */}
+      <section className="mx-auto max-w-6xl px-8 py-14">
+        <h2 className="text-2xl font-bold text-navy">Shop by category</h2>
+        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
+          {categories.map((c) => (
+            <Link
+              key={c}
+              href={`/products?category=${encodeURIComponent(c)}`}
+              className="rounded-xl border border-navy/10 bg-cool p-8 text-center text-lg font-semibold capitalize text-navy transition hover:border-electric hover:bg-white hover:text-electric"
+            >
+              {c}
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Featured products */}
+      <section className="mx-auto max-w-6xl px-8 pb-16">
+        <div className="flex items-end justify-between">
+          <h2 className="text-2xl font-bold text-navy">New arrivals</h2>
+          <Link href="/products" className="text-electric hover:underline">
+            View all →
+          </Link>
+        </div>
+        <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {featured.map((p) => (
+            <ProductCard key={p.id} product={p} />
+          ))}
+        </div>
+      </section>
     </main>
   );
 }

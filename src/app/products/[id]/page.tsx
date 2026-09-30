@@ -24,38 +24,47 @@ export default async function ProductPage({
   if (!data) notFound();
   const product = data as Product;
 
-  return (
-    <main className="mx-auto max-w-3xl p-8">
-      <Link href="/products" className="text-sm underline">
+    return (
+    <main className="mx-auto max-w-5xl px-8 py-10">
+      <Link href="/products" className="text-sm text-electric hover:underline">
         ← Back to products
       </Link>
 
-      <div className="mt-6 grid gap-8 sm:grid-cols-2">
-        {/* Grey placeholder until we add real images */}
-                <div className="relative h-64 overflow-hidden rounded bg-gray-100">
+      <div className="mt-6 grid gap-10 md:grid-cols-2">
+        {/* Big photo panel */}
+        <div className="relative h-80 overflow-hidden rounded-xl bg-cool md:h-[28rem]">
           {product.image_url && (
             <Image
               src={product.image_url}
               alt={product.name}
               fill
-              sizes="(min-width: 640px) 50vw, 100vw"
-              className="object-contain p-2"
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-contain p-6"
             />
           )}
         </div>
 
         <div>
-          <h1 className="text-3xl font-bold">{product.name}</h1>
-          <p className="mt-2 text-2xl">
+          <p className="text-sm font-semibold uppercase tracking-wide text-electric">
+            {product.category}
+          </p>
+          <h1 className="mt-2 text-3xl font-bold text-navy">{product.name}</h1>
+          <p className="mt-4 text-3xl font-bold text-navy">
             ${(product.price_cents / 100).toFixed(2)}
           </p>
-          <p className="mt-4 text-gray-600">{product.description}</p>
-          <p className={product.stock > 0 ? "mt-4 text-green-600" : "mt-4 text-red-600"}>
-            {product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}
+          <p className="mt-6 leading-relaxed text-muted">{product.description}</p>
+
+          {/* Stock message: warns when only a few are left */}
+          <p className={`mt-6 text-sm font-medium ${product.stock > 0 ? "text-electric" : "text-muted"}`}>
+            {product.stock === 0
+              ? "Out of stock"
+              : product.stock <= 5
+                ? `Only ${product.stock} left`
+                : "In stock"}
           </p>
 
-          {/* Does nothing yet; we'll wire it up when we build the cart */}
           <AddToCartButton product={product} />
+          <p className="mt-4 text-sm text-muted">Free shipping on orders over $150.</p>
         </div>
       </div>
     </main>

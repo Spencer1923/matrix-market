@@ -11,10 +11,10 @@ export default function Navbar() {
   const count = items.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
-    <nav className="flex items-center justify-between border-b border-navy/10 bg-white px-8 py-4">
+        <nav className="flex items-center justify-between border-b border-navy/10 bg-white px-8 py-2">
       <Link href="/" aria-label="Matrix Market home">
         {/* h-8 sets the height; w-auto keeps your logo's proportions */}
-        <Image src="/logo.svg" alt="Matrix Market" width={160} height={40} priority className="h-8 w-auto" />
+        <Image src="/logo.svg" alt="Matrix Market" width={1024} height={931} priority className="h-32 w-auto" />
       </Link>
       <div className="flex items-center gap-6 text-navy">
         <Link href="/products" className="hover:text-electric">

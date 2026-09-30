@@ -4,6 +4,7 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 import { addProduct, updateProduct } from "./actions";
 import type { Product } from "@/types/product";
 import Link from "next/link";
+import DeleteProductButton from "@/components/DeleteProductButton";
 
 export default async function AdminPage() {
   async function logout() {
@@ -75,6 +76,7 @@ export default async function AdminPage() {
               <button className="rounded-lg border border-electric px-4 py-1.5 text-sm font-medium text-link transition hover:bg-electric hover:text-white">
                 Save
               </button>
+              <DeleteProductButton name={p.name} />
             </form>
           </li>
         ))}

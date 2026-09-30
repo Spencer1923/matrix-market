@@ -102,3 +102,33 @@ export async function setOrderStatus(formData: FormData) {
   if (error) console.error("Order status failed:", error);
   revalidatePath("/admin/orders");
 }
+
+// Deletes a product, its photo, and the link from old orders (order history stays)
+export async function deleteProduct(formData: FormData) {
+  await requireAdmin();
+
+  const id = parseInt(String(formData.get("id")), 10);
+  if (!Number.isInteger(id)) return;
+
+  // Grab the photo URL first, so we can remove the file afterwards
+  const { data: product } = await supabaseAdmin
+    .from("products")
+    .select("image_url")
+    .eq("id", id)
+    .single();
+
+  // Past orders keep the name and price; only their link to the product is removed
+  await supabaseAdmin.from("order_items").update({ product_id: null }).eq("product_id", id);
+
+  const { error } = await supabaseAdmin.from("products").delete().eq("id", id);
+  if (error) {
+    console.error("Delete product failed:", error);
+    return;
+  }
+
+  // The file name is whatever comes after "/product-images/" in the photo URL
+  const path = product?.image_url?.split("/product-images/")[1];
+  if (path) await supabaseAdmin.storage.from("product-images").remove([path]);
+
+  refresh();
+}

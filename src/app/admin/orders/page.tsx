@@ -32,28 +32,36 @@ export default async function OrdersPage() {
     .limit(100); // the latest 100 for now
   const orders = (data ?? []) as Order[];
 
-  return (
-    <main className="mx-auto max-w-3xl p-8">
-      <Link href="/admin" className="text-sm underline">
+    return (
+    <main className="mx-auto max-w-3xl px-8 py-10">
+      <Link href="/admin" className="text-sm text-electric hover:underline">
         ← Back to admin
       </Link>
-      <h1 className="mt-4 text-3xl font-bold">Orders</h1>
+      <h1 className="mt-4 text-3xl font-bold text-navy">Orders</h1>
 
-      {orders.length === 0 && <p className="mt-6 text-gray-600">No orders yet.</p>}
+      {orders.length === 0 && <p className="mt-6 text-muted">No orders yet.</p>}
 
       <ul className="mt-6 space-y-4">
         {orders.map((o) => (
-          <li key={o.id} className="rounded border p-4">
-            <div className="flex flex-wrap justify-between gap-2">
-              <p className="font-semibold">Order #{o.id}</p>
-              <p className="text-sm text-gray-600">
-                {new Date(o.created_at).toLocaleString("en-CA")}
-              </p>
+          <li key={o.id} className="rounded-xl border border-navy/10 p-5">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="font-bold text-navy">Order #{o.id}</p>
+              {/* Status pill: cyan when shipped, blue when new */}
+              <span
+                className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                  o.status === "shipped" ? "bg-aqua/20 text-electric" : "bg-skyblue/20 text-navy"
+                }`}
+              >
+                {o.status === "shipped" ? "Shipped" : "New"}
+              </span>
             </div>
-            <p className="text-sm text-gray-600">{o.customer_email ?? "No email"}</p>
-            {/* Shipping address (orders made before this step won't have one) */}
+            <p className="mt-1 text-sm text-muted">
+              {new Date(o.created_at).toLocaleString("en-CA")} · {o.customer_email ?? "No email"}
+            </p>
+
+            {/* Shipping address (older orders won't have one) */}
             {o.shipping_address && (
-              <p className="mt-1 text-sm text-gray-600">
+              <p className="mt-1 text-sm text-muted">
                 Ship to: {o.shipping_name}, {o.shipping_address.line1}
                 {o.shipping_address.line2 ? `, ${o.shipping_address.line2}` : ""},{" "}
                 {o.shipping_address.city}, {o.shipping_address.state}{" "}
@@ -61,9 +69,9 @@ export default async function OrdersPage() {
               </p>
             )}
 
-            <ul className="mt-3 text-sm">
+            <ul className="mt-4 divide-y divide-navy/10 text-sm">
               {o.order_items.map((i) => (
-                <li key={i.id} className="flex justify-between">
+                <li key={i.id} className="flex justify-between py-2">
                   <span>
                     {i.name} × {i.quantity}
                   </span>
@@ -72,25 +80,20 @@ export default async function OrdersPage() {
               ))}
             </ul>
 
-            {/* total_cents is what Stripe actually charged */}
-                       <div className="mt-3 flex items-center justify-between">
+            <div className="mt-4 flex items-center justify-between">
               {/* Button flips the status: new -> shipped, or shipped -> new */}
-              <form action={setOrderStatus} className="flex items-center gap-3">
+              <form action={setOrderStatus}>
                 <input type="hidden" name="id" value={o.id} />
                 <input type="hidden" name="status" value={o.status === "shipped" ? "new" : "shipped"} />
-                <span className={o.status === "shipped" ? "text-green-600" : "text-orange-600"}>
-                  {o.status === "shipped" ? "Shipped" : "New"}
-                </span>
-                <button className="rounded border px-3 py-1 text-sm">
+                <button className="rounded-lg border border-electric px-3 py-1 text-sm font-medium text-electric transition hover:bg-electric hover:text-white">
                   {o.status === "shipped" ? "Mark as new" : "Mark as shipped"}
                 </button>
               </form>
               {/* total_cents is what Stripe actually charged */}
-              <p className="font-bold">
+              <p className="font-bold text-navy">
                 Total: ${(o.total_cents / 100).toFixed(2)} {o.currency.toUpperCase()}
               </p>
             </div>
-              Total: ${(o.total_cents / 100).toFixed(2)} {o.currency.toUpperCase()}            
           </li>
         ))}
       </ul>

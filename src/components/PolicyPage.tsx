@@ -7,12 +7,15 @@ export default function PolicyPage({
   sections: { heading: string; text: string }[];
 }) {
   return (
-    <main className="mx-auto max-w-2xl p-8">
-      <h1 className="text-3xl font-bold">{title}</h1>
+    <main className="mx-auto max-w-2xl px-8 py-10">
+      <h1 className="text-3xl font-bold text-navy">{title}</h1>
+      <p className="mt-3 rounded-lg bg-cool p-3 text-sm text-muted">
+        This is a portfolio demo. No real orders are processed, and this page contains sample text.
+      </p>
       {sections.map((s) => (
-        <section key={s.heading} className="mt-6">
-          <h2 className="text-xl font-semibold">{s.heading}</h2>
-          <p className="mt-2 text-gray-600">{s.text}</p>
+        <section key={s.heading} className="mt-8">
+          <h2 className="text-xl font-semibold text-navy">{s.heading}</h2>
+          <p className="mt-2 leading-relaxed text-muted">{s.text}</p>
         </section>
       ))}
     </main>

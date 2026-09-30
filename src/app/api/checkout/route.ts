@@ -58,19 +58,23 @@ export async function POST(req: Request) {
   // Free shipping at $150 or more, otherwise a flat $9.99 (cents)
   const shippingCents = subtotal >= 15000 ? 0 : 999;
 
+  // Use the site the customer is actually on, so it works locally and when deployed
+  const origin = req.headers.get("origin") ?? process.env.NEXT_PUBLIC_SITE_URL;
+
   // Ask Stripe for a hosted payment page
   const session = await stripe.checkout.sessions.create({
     mode: "payment", // one-time payment (not a subscription)
     line_items,
     // Stripe shows an address form; only these countries can be selected
     shipping_address_collection: { allowed_countries: ["CA", "US"] },
-        // One shipping option; the price is decided here on the server
+    // One shipping option; the price is decided here on the server
     shipping_options: [
       {
         shipping_rate_data: {
           type: "fixed_amount",
           fixed_amount: { amount: shippingCents, currency: "cad" },
-          display_name: shippingCents === 0 ? "Free shipping" : "Standard shipping",
+          display_name:
+            shippingCents === 0 ? "Free shipping" : "Standard shipping",
           tax_behavior: "exclusive",
           tax_code: "txcd_92010001", // Stripe's "shipping" category
           delivery_estimate: {
@@ -82,8 +86,8 @@ export async function POST(req: Request) {
     ],
     // Stripe calculates tax from the shipping address
     automatic_tax: { enabled: true },
-    success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success`,
-    cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/cart`,
+    success_url: `${origin}/checkout/success`,
+    cancel_url: `${origin}/cart`,
     // Saved on the payment so we know what was bought (used for inventory later)
     metadata: { items: JSON.stringify(items) },
   });

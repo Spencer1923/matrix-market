@@ -6,6 +6,14 @@ A full-stack e-commerce store for tech products TVs, speakers, games etc... buil
 
 **Live demo:** https://the-matrix-market.netlify.app/cart
 
+## Screenshots
+
+![Homepage](docs/screenshots/home.png)
+![Product page](docs/screenshots/product.png)
+![Cart](docs/screenshots/cart.png)
+![Admin dashboard](docs/screenshots/admin.png)
+![Dark mode](docs/screenshots/dark.png)
+
 ## Features
 
 **Storefront**

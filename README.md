@@ -8,11 +8,11 @@ A full-stack e-commerce store for tech products TVs, speakers, games etc... buil
 
 ## Screenshots
 
-![Homepage](docs/screenshots/home.png)
-![Product page](docs/screenshots/product.png)
-![Cart](docs/screenshots/cart.png)
-![Admin dashboard](docs/screenshots/admin.png)
-![Dark mode](docs/screenshots/dark.png)
+![Homepage](docs/screenshots/home.jpg)
+![Product page](docs/screenshots/product.jpg)
+![Cart](docs/screenshots/cart.jpg)
+![Admin dashboard](docs/screenshots/admin.jpg)
+![Dark mode](docs/screenshots/dark.jpg)
 
 ## Features
 

@@ -11,6 +11,10 @@ export default function Navbar() {
   // Total number of units in the cart
   const count = items.reduce((sum, i) => sum + i.quantity, 0);
 
+    // Underline that grows from the left on hover
+  const underline =
+    "relative after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:bg-electric after:transition-all after:duration-300 hover:after:w-full";
+
     return (
     <nav className="flex items-center justify-between border-b border-ink/10 bg-surface px-8 py-2">
       <Link href="/" aria-label="Matrix Market home">
@@ -18,7 +22,7 @@ export default function Navbar() {
         <Image src="/logo.svg" alt="Matrix Market" width={1024} height={931} priority className="h-32 w-auto" />
       </Link>
       <div className="flex items-center gap-6 text-ink">
-        <Link href="/products" className="hover:text-link">
+        <Link href="/products" className={`hover:text-link ${underline}`}>
           Products
         </Link>
         <Link href="/cart" className="flex items-center gap-2 hover:text-link">

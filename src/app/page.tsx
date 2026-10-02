@@ -19,33 +19,81 @@ export default async function Home() {
   return (
     <main>
       {/* Hero: big headline and a call-to-action button */}
-      <section className="bg-panel">
-        <div className="mx-auto max-w-6xl px-8 py-20 text-center sm:py-28">
-          <h1 className="text-4xl font-bold text-ink sm:text-6xl">
-            Tech that <span className="text-link">powers</span> your setup
+            {/* Hero: gradient background with soft glowing blobs behind the text */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-panel to-surface">
+        <div className="animate-float absolute -left-24 -top-24 h-72 w-72 rounded-full bg-electric/20 blur-3xl" />
+        <div
+          className="animate-float absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-aqua/20 blur-3xl"
+          style={{ animationDelay: "-4s" }}
+        />
+        <div className="relative mx-auto max-w-6xl px-8 py-24 text-center sm:py-32">
+          <span className="animate-fade-up inline-block rounded-full border border-electric/30 bg-electric/10 px-4 py-1 text-sm font-medium text-link">
+            Free shipping on orders over $150
+          </span>
+          {/* Delays are inline so each line fades in one after the other */}
+          <h1
+            className="animate-fade-up mt-6 text-5xl font-extrabold tracking-tight text-ink sm:text-7xl"
+            style={{ animationDelay: "100ms" }}
+          >
+            Tech that{" "}
+            <span className="bg-gradient-to-r from-electric to-aqua bg-clip-text text-transparent">
+              powers
+            </span>{" "}
+            your setup
           </h1>
-          <p className="mx-auto mt-5 max-w-xl text-lg text-muted">
+          <p
+            className="animate-fade-up mx-auto mt-6 max-w-xl text-lg text-muted"
+            style={{ animationDelay: "200ms" }}
+          >
             TVs, speakers, and games, all in one place.
           </p>
-          <Link
-            href="/products"
-            className="mt-8 inline-block rounded-lg bg-electric px-8 py-3 font-semibold text-white transition hover:bg-accent-hover"
+          <div
+            className="animate-fade-up mt-10 flex flex-wrap justify-center gap-4"
+            style={{ animationDelay: "300ms" }}
           >
-            Shop all products
-          </Link>
+            <Link href="/products" className="btn-primary rounded-xl px-8 py-3.5">
+              Shop all products
+            </Link>
+            <a
+              href="#categories"
+              className="rounded-xl border border-ink/20 px-8 py-3.5 font-semibold text-ink transition hover:border-electric hover:text-link"
+            >
+              Browse categories
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust bar */}
+      <section className="border-y border-ink/10 bg-surface">
+        <div className="mx-auto grid max-w-6xl gap-6 px-8 py-6 text-sm sm:grid-cols-3">
+          {[
+            ["Free shipping over $150", "Delivered across Canada and the US"],
+            ["Hassle-free returns", "See our returns policy"],
+            ["Secure checkout", "Payments powered by Stripe"],
+          ].map(([title, sub]) => (
+            <div key={title} className="flex items-center justify-center gap-3">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-aqua/20 text-link">
+                ✓
+              </span>
+              <div>
+                <p className="font-semibold text-ink">{title}</p>
+                <p className="text-muted">{sub}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* Category tiles: each links to the filtered products page */}
-      <section className="mx-auto max-w-6xl px-8 py-14">
+      <section id="categories" className="mx-auto max-w-6xl px-8 py-14">
         <h2 className="text-2xl font-bold text-ink">Shop by category</h2>
         <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
           {categories.map((c) => (
             <Link
               key={c}
               href={`/products?category=${encodeURIComponent(c)}`}
-              className="rounded-xl border border-ink/10 bg-panel p-8 text-center text-lg font-semibold capitalize text-ink transition hover:border-electric hover:bg-surface hover:text-link"
-            >
+                            className="rounded-2xl border border-ink/10 bg-panel p-8 text-center text-lg font-semibold capitalize text-ink transition duration-300 hover:-translate-y-1 hover:border-electric/50 hover:text-link hover:shadow-xl hover:shadow-electric/10">
               {c}
             </Link>
           ))}
@@ -61,8 +109,10 @@ export default async function Home() {
           </Link>
         </div>
         <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {featured.map((p) => (
-            <ProductCard key={p.id} product={p} />
+          {featured.map((p, i) => (
+            <div key={p.id} className="animate-fade-up" style={{ animationDelay: `${i * 100}ms` }}>
+              <ProductCard product={p} />
+            </div>
           ))}
         </div>
       </section>

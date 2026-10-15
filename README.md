@@ -4,7 +4,7 @@ A full-stack e-commerce store for tech products TVs, speakers, games etc... buil
 
 > **Portfolio demo.** Stripe runs in test mode and no real products are sold. To try checkout, use card `4242 4242 4242 4242` with any future expiry date and any CVC.
 
-**Live demo:** https://the-matrix-market.netlify.app/cart
+**Live demo:** https://the-matrix-market.netlify.app/
 
 ## Screenshots
 
